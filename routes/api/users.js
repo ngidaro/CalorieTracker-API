@@ -7,10 +7,15 @@ var Info = require('../../security/info');
 var User = require('../../models/user');
 const user = require('../../models/user');
 
+router.get('/', async function ( req, res, next ){
+    // res.send('WASSUP FROM USER');
+    res.json({"name": "name"});
+})
+
 router.post('/login', async function (req, res, next) {
     try {
-        const loginuser = await User.findOne({ email: req.body.email })
-            .select('_id password firstname lastname email')
+        const loginuser = await User.findOne({ username: req.body.username })
+            .select('_id password username email')
             .exec();
 
         if (loginuser) {
@@ -43,8 +48,7 @@ router.post('/login', async function (req, res, next) {
 function createToken(user) {
     const payload = {
         user_id: user._id,
-        firstname: user.firstname,
-        lastname: user.lastname,
+        username: user.username,
         email: user.email,
     };
 
@@ -53,16 +57,15 @@ function createToken(user) {
 
 router.post('/createaccount', async function (req, res, next) {
     try {
-        const existinguser = await User.findOne({ email: req.body.email })
-            .select('_id password firstname lastname email')
+        const existinguser = await User.findOne({ username: req.body.username })
+            .select('_id password username email')
             .exec();
 
         if (!existinguser) {
             var newUser = new User();
-            newUser.email = req.body.email;
-            newUser.firstname = req.body.firstname;
-            newUser.lastname = req.body.lastname;
+            newUser.username = req.body.username;
             newUser.password = req.body.password;
+            newUser.email = req.body.email;
             const encryptedpassword = await bcrypt.hash(req.body.password, Info.saltRounds);
             if (encryptedpassword) {
                 newUser.password = encryptedpassword;
@@ -80,12 +83,16 @@ router.post('/createaccount', async function (req, res, next) {
             res.statusCode = 200;
             res.json({ token: token });
         }
+        else{
+            console.log("Username is already taken");
+        }
     }
     catch (error) {
         console.info(error);
         res.statusCode = 500;
         res.json({ statuscode: res.statusCode, api: req.originalUrl, error: `${error}` });
     }
+
 });
 
 module.exports = router;

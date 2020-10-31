@@ -3,7 +3,8 @@ var router = express.Router();
 
 /* GET API page. */
 router.get('/', function (req, res, next) {
-    res.send('WASSUP');
+    res.json({name: 'WASSUP'});
+    // res.send('WASSUP');
 });
 
 module.exports = router;

@@ -9,7 +9,7 @@ var User = require('../../models/user');
 
 router.patch('/calorietrackerinitialize-20200629', async function (req, res, next) {
     try {
-        const superAdminUser = await getUser(next, 'Super', 'Admin', 'superadmin', 'p5145156481assword', 'ngidaro@hotmail.com');
+        const superAdminUser = await getUser(next, 'Admin', 'superadmin', 'p5145156481assword', 'ngidaro@hotmail.com');
 
         res.json(superAdminUser);
 
