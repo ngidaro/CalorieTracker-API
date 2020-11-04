@@ -5,7 +5,6 @@ const bcrypt = require("bcryptjs");
 var Info = require('../../security/info');
 
 var User = require('../../models/user');
-const user = require('../../models/user');
 
 router.get('/', async function ( req, res, next ){
     // res.send('WASSUP FROM USER');

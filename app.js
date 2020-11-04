@@ -35,6 +35,7 @@ mongoose.connect(mongodb_connection, { promiseLibrary: require('bluebird'), useN
 
 var routeAPI = require('./routes/api/api');
 var routeAPIUsers = require('./routes/api/users');
+var routeAPIFoods = require('./routes/api/food');
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({
@@ -60,6 +61,7 @@ app.use(allowCrossDomain);
 app.use('/', routeAPI);
 app.use('/api', routeAPI);
 routeAPI.use('/users', routeAPIUsers);
+routeAPI.use('/food', routeAPIFoods);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
