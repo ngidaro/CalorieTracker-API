@@ -23,7 +23,7 @@ router.post('/login', async function (req, res, next) {
                 //Create token payload
                 const token = createToken(loginuser);
                 res.statusCode = 200;
-                res.json({ token: token });
+                res.json({ token: token, _id:loginuser._id });
             }
             else {
                 const error = `Please check Email or Password.`
@@ -80,7 +80,7 @@ router.post('/createaccount', async function (req, res, next) {
 
             const token = createToken(newUser);
             res.statusCode = 200;
-            res.json({ token: token });
+            res.json({ token: token, _id: newUser._id });
         }
         else{
             console.log("Username is already taken");
