@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-    userid: { type: Schema.Types.ObjectId, ref: 'User' },
+    userid: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     date: { type: Date, required: true},
 
     amount: { type: Number, required: true },
@@ -13,6 +13,7 @@ var schema = new Schema({
     fooddescription: { type: String, required: true },
     brandowner: { type: String, required: true },
     energy: { type: Number, required: true },
+    servingunits: { type: String, required: true },
 
     creationuser: { type: Schema.Types.ObjectId, ref: 'User' },
     creationdate: { type: Date, default: Date.now },

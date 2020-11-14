@@ -34,6 +34,8 @@ router.post('/savediary', /* isAuthenticated */ async function ( req, res, next 
 
     try {
 
+        console.log(req.body.user_id);
+
         var newDiaryEntry = new Diary();
             newDiaryEntry.userid = req.body.user_id;
             newDiaryEntry.date = Date.now(); // Will eventually change this to the date for the log
@@ -44,6 +46,7 @@ router.post('/savediary', /* isAuthenticated */ async function ( req, res, next 
             newDiaryEntry.fooddescription = req.body.description;
             newDiaryEntry.brandowner = req.body.brandowner;
             newDiaryEntry.energy = req.body.energy;
+            newDiaryEntry.servingunits = req.body.servingunits;
             newDiaryEntry.creationuser = req.body.user_id;
 
             var savedDiaryEntry = await newDiaryEntry.save();
@@ -57,6 +60,22 @@ router.post('/savediary', /* isAuthenticated */ async function ( req, res, next 
 
             res.statusCode = 200;
             res.json({ diary: newDiaryEntry });
+        
+    } catch (error) {
+        console.info(error);
+        res.statusCode = 500;
+        res.json({ statuscode: res.statusCode, api: req.originalUrl, error: `${error}` });
+    }
+});
+
+router.post('/getdiary', /* isAuthenticated */ async function ( req, res, next ){
+
+    try {
+
+        const userFoods = await Diary.find({ userid: req.body.user_id })
+
+        res.statusCode = 200;
+        res.json({ foodDiary: userFoods });
         
     } catch (error) {
         console.info(error);

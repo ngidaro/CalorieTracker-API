@@ -12,6 +12,7 @@ router.get('/', async function ( req, res, next ){
 })
 
 router.post('/login', async function (req, res, next) {
+
     try {
         const loginuser = await User.findOne({ username: req.body.username })
             .select('_id password username email')
