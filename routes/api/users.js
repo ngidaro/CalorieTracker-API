@@ -85,6 +85,7 @@ router.post('/createaccount', async function (req, res, next) {
         }
         else{
             console.log("Username is already taken");
+            res.json();
         }
     }
     catch (error) {
