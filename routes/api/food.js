@@ -34,13 +34,17 @@ router.post('/fooddata', /* isAuthenticated */ async function ( req, res, next )
 
 router.post('/savediary', /* isAuthenticated */ async function ( req, res, next ){
 
+    //--------- Convert Date to UTC ---------
+
+    const date = dateUTC(req.body.date);
+
     try {
 
         console.log(req.body.user_id);
 
         var newDiaryEntry = new Diary();
             newDiaryEntry.userid = req.body.user_id;
-            newDiaryEntry.date = Date.now(); // Will eventually change this to the date for the log
+            newDiaryEntry.date = date; // Will eventually change this to the date for the log
             // newDiaryEntry.date = req.body.date;
             newDiaryEntry.amount = req.body.amount;
             newDiaryEntry.servingsize = req.body.servingsize;
@@ -72,9 +76,22 @@ router.post('/savediary', /* isAuthenticated */ async function ( req, res, next 
 
 router.post('/getdiary', /* isAuthenticated */ async function ( req, res, next ){
 
+    const date = dateUTC(new Date (req.body.date));
+
+    const rangeddate = new Date(date);
+
+    rangeddate.setUTCHours(0);
+    rangeddate.setUTCMinutes(0);
+    rangeddate.setUTCSeconds(0);
+    rangeddate.setUTCMilliseconds(0);
+
     try {
 
-        const userFoods = await Diary.find({ userid: req.body.user_id })
+        const userFoods = await Diary.find({ userid: { $in: req.body.user_id },
+                                        "date": {"$gte": rangeddate,
+                                        "$lt":new Date(rangeddate).setDate(new Date(rangeddate).getDate()+1)} })
+
+        console.log(userFoods);
 
         res.statusCode = 200;
         res.json({ foodDiary: userFoods });
@@ -85,5 +102,27 @@ router.post('/getdiary', /* isAuthenticated */ async function ( req, res, next )
         res.json({ statuscode: res.statusCode, api: req.originalUrl, error: `${error}` });
     }
 });
+
+function dateUTC(date){
+
+    const newdate = new Date(date)
+
+    newdate.setUTCFullYear(new Date(date).getFullYear());
+    // console.log("1 :" + date);
+    newdate.setUTCMonth(new Date(date).getMonth());
+    // console.log("2 :" + date);
+    newdate.setUTCDate(new Date(date).getDate());
+    // console.log("3 :" + date);
+    newdate.setUTCHours(new Date(date).getHours());
+    // console.log("4 :" + date);
+    newdate.setUTCMinutes(new Date(date).getMinutes());
+    // console.log("5 :" + date);
+    newdate.setUTCSeconds(new Date(date).getSeconds());
+    // console.log("6 :" + date);
+    newdate.setUTCMilliseconds(new Date(date).getMilliseconds());
+    // console.log("7 :" + date);){
+
+    return newdate;
+}
 
 module.exports = router;
