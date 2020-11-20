@@ -13,6 +13,10 @@ var schema = new Schema({
     fooddescription: { type: String, required: true },
     brandowner: { type: String, required: true },
     energy: { type: Number, required: true },
+    protein: { type: Number, required: true },
+    carbohydrates: { type: Number, required: true },
+    fat: { type: Number, required: true },
+    // fiber: { type: Number, required: true },
     servingunits: { type: String, required: true },
 
     creationuser: { type: Schema.Types.ObjectId, ref: 'User' },

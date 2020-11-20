@@ -41,6 +41,7 @@ router.post('/savediary', /* isAuthenticated */ async function ( req, res, next 
     try {
 
         console.log(req.body.user_id);
+        console.log(req.body);
 
         var newDiaryEntry = new Diary();
             newDiaryEntry.userid = req.body.user_id;
@@ -52,6 +53,10 @@ router.post('/savediary', /* isAuthenticated */ async function ( req, res, next 
             newDiaryEntry.fooddescription = req.body.description;
             newDiaryEntry.brandowner = req.body.brandowner;
             newDiaryEntry.energy = req.body.energy;
+            newDiaryEntry.protein = req.body.protein;
+            newDiaryEntry.carbohydrates = req.body.carbs;
+            newDiaryEntry.fat = req.body.fat;
+            // newDiaryEntry.fiber = req.body.fiber;
             newDiaryEntry.servingunits = req.body.servingunits;
             newDiaryEntry.creationuser = req.body.user_id;
 
