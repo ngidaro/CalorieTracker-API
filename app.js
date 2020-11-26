@@ -9,7 +9,7 @@ const app = express();
  *  App Configuration
  */
 var config = { "mongodb": "mongodb://localhost:27017/database-" + Info.app.code }; // Used for local mongoDB
-var MONGODB_URL = 'mongodb+srv://dbCoen390:coen390team11@cluster0.q2vqt.mongodb.net/CalorieTracker?retryWrites=true&w=majority'
+var MONGODB_URL = 'mongodb+srv://dbCoen390:coen390team11@cluster0.q2vqt.mongodb.net/CalorieTracker?retryWrites=true&w=majority';
 if (process && process.env && process.env.MONGO_USER && process.env.MONGO_HOST) {
   config = {
     "mongo": {
@@ -25,13 +25,14 @@ if (config.mongodb) {
 }
 
 var mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 // mongoose.connect(MONGODB_URL, { promiseLibrary: require('bluebird'), useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.connect(mongodb_connection, { promiseLibrary: require('bluebird'), useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('                   DB connection successful');
     console.log('********************************************************************');
   })
-  .catch((err) => logger.error('DB connection failed', err));
+  .catch((err) => console.error('DB connection failed', err));
 
 var routeAPI = require('./routes/api/api');
 var routeAPIUsers = require('./routes/api/users');

@@ -11,6 +11,14 @@ router.get('/', async function ( req, res, next ){
     res.json({"name": "name"});
 })
 
+router.post('/getuser', async function ( req, res, next ){
+    
+    const userData = await User.findOne({ _id: req.body._id })
+            .exec();
+
+    res.json({userdata: userData});
+})
+
 router.post('/login', async function (req, res, next) {
 
     try {
@@ -58,7 +66,7 @@ function createToken(user) {
 router.post('/createaccount', async function (req, res, next) {
     try {
         const existinguser = await User.findOne({ username: req.body.username })
-            .select('_id password username email')
+            .select('username')
             .exec();
 
         if (!existinguser) {
@@ -74,19 +82,49 @@ router.post('/createaccount', async function (req, res, next) {
             if (savedUser) {
                 console.log('Generated user...');
                 newUser = savedUser;
+
+                res.statusCode = 200;
+                res.json({ token: createToken(newUser), _id: newUser._id });
+
             } else {
                 const err = 'Error saving';
                 console.error(err);
             }
 
-            const token = createToken(newUser);
-            res.statusCode = 200;
-            res.json({ token: token, _id: newUser._id });
+            // const token = createToken(newUser);
+            // res.statusCode = 200;
+            // res.json({ token: token, _id: newUser._id });
         }
         else{
             console.log("Username is already taken");
             res.json();
         }
+    }
+    catch (error) {
+        console.info(error);
+        res.statusCode = 500;
+        res.json({ statuscode: res.statusCode, api: req.originalUrl, error: `${error}` });
+    }
+
+});
+
+router.post('/updateaccount', async function (req, res, next) {
+    try {
+        var updatedUser = await User.findOneAndUpdate({ "_id": req.body._id },
+                                { "$set": { "gender": req.body.gender ,
+                                            "age": req.body.age ,
+                                            "height": req.body.height ,
+                                            "weight": req.body.weight ,
+                                            "targetweight":req.body.targetweight ,
+                                            "activitylevel": req.body.activitylevel ,
+                                            "proteinratio":req.body.proteinratio ,
+                                            "carbsratio":req.body.carbsratio ,
+                                            "fatratio":req.body.fatratio }})
+            .select('_id')
+            .exec();
+
+        res.statusCode = 200;
+        res.json({user: updatedUser});
     }
     catch (error) {
         console.info(error);
