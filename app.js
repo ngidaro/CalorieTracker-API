@@ -26,8 +26,8 @@ if (config.mongodb) {
 
 var mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
-// mongoose.connect(MONGODB_URL, { promiseLibrary: require('bluebird'), useNewUrlParser: true, useUnifiedTopology: true })
-mongoose.connect(mongodb_connection, { promiseLibrary: require('bluebird'), useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGODB_URL, { promiseLibrary: require('bluebird'), useNewUrlParser: true, useUnifiedTopology: true })
+// mongoose.connect(mongodb_connection, { promiseLibrary: require('bluebird'), useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('                   DB connection successful');
     console.log('********************************************************************');
@@ -38,6 +38,8 @@ var routeAPI = require('./routes/api/api');
 var routeAPIUsers = require('./routes/api/users');
 var routeAPIFoods = require('./routes/api/food');
 var routeAPIExercises = require('./routes/api/exercise');
+var routeAPIRecipes = require('./routes/api/recipe');
+var routeAPIIngredients = require('./routes/api/ingredient');
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({
@@ -65,6 +67,8 @@ app.use('/api', routeAPI);
 routeAPI.use('/users', routeAPIUsers);
 routeAPI.use('/food', routeAPIFoods);
 routeAPI.use('/exercise', routeAPIExercises);
+routeAPI.use('/recipe', routeAPIRecipes);
+routeAPI.use('/ingredient', routeAPIIngredients);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
