@@ -115,7 +115,7 @@ router.post('/updateaccount', async function (req, res, next) {
                                             "age": req.body.age ,
                                             "height": req.body.height ,
                                             "weight": req.body.weight ,
-                                            "targetweight":req.body.targetweight ,
+                                            "weightlossweekly":req.body.weightlossweekly ,
                                             "activitylevel": req.body.activitylevel ,
                                             "proteinratio":req.body.proteinratio ,
                                             "carbsratio":req.body.carbsratio ,

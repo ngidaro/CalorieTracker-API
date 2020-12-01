@@ -12,7 +12,7 @@ var schema = new Schema({
     age: { type: Number, required: false },
     height: { type: Number, required: false },
     weight: { type: Number, required: false },
-    targetweight: { type: Number, required: false },
+    weightlossweekly: { type: Number, required: false },
     activitylevel: { type: String, required: false },
 
     proteinratio: { type: Number, required: false },
