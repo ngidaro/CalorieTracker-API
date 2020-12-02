@@ -26,8 +26,8 @@ if (config.mongodb) {
 
 var mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
-// mongoose.connect(MONGODB_URL, { promiseLibrary: require('bluebird'), useNewUrlParser: true, useUnifiedTopology: true })
-mongoose.connect(mongodb_connection, { promiseLibrary: require('bluebird'), useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGODB_URL, { promiseLibrary: require('bluebird'), useNewUrlParser: true, useUnifiedTopology: true })
+// mongoose.connect(mongodb_connection, { promiseLibrary: require('bluebird'), useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('                   DB connection successful');
     console.log('********************************************************************');
