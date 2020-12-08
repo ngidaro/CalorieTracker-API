@@ -15,7 +15,9 @@ the command>    npm install
 - Make sure a message is displayed in the IDE console saying that the API has succesfully connected to the Database.
 - You can now minimize this windown (DO NOT EXIT)
 
-- Now open your CalorieTracker project in AndroidStudio.
+- Clone the repository CalorieTracker found here: https://github.com/ngidaro/CalorieTracker.git
+
+- Now open your CalorieTracker project in AndroidStudio (The project folder to open is the folder inside the cloned folder).
 - Go to the VolleyRequestContainer file (CalorieTracker/app/src/main/java/com/example/calorietracker/VolleyRequestContainer.java)
 - Change the IP address around line 23 to your IP address.
 - To get the IP address for windows, follow this tutorial: https://www.avast.com/c-how-to-find-ip-address
