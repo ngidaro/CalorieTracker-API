@@ -21,3 +21,4 @@ the command>    npm install
 - To get the IP address for windows, follow this tutorial: https://www.avast.com/c-how-to-find-ip-address
 - For mac, go to the wifi icon on the top bar of your screen, press "open network preferences" and the IP will be shown on the right below where it shows "status:connected".
 - So on line 22 in the androidstudio project, the string should be "http://yourIPaddress:3333"
+- Next Run the Application in android studio
